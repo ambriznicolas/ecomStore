@@ -3,14 +3,7 @@ import { describe, it, expect } from "vitest";
 const data = import.meta.env.VITE_APP_DATA;
 // import axios from "axios";
 // // Function to fetch products from the API
-// const fetchProducts = async () => {
-//   try {
-//     const response = await axios.get("http://localhost:3000/api/products/");
-//     return response.data;
-//   } catch (error) {
-//     throw new Error("Failed to fetch products");
-//   }
-// };
+
 // // Mock axios
 // vi.mock("axios");
 describe("fetchProducts", () => {
