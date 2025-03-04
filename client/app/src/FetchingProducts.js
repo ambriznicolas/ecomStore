@@ -15,11 +15,11 @@ const DATA_URL = import.meta.env.VITE_API_BASE_URL;
 
 // export default fetchProducts;
 
-export const fetchProducts = async () => {
+export async function fetchProducts() {
   try {
     const productResponse = await axios.get(`${DATA_URL}/products`);
     return productResponse.data;
   } catch (err) {
     throw new Error("Failed to fetch products");
   }
-};
+}

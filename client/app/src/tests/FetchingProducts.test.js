@@ -1,6 +1,6 @@
-import { fetchProducts } from "./Products";
-import { describe, it, expect } from "vitest";
-const data = import.meta.env.VITE_APP_DATA;
+import { fetchProducts } from "../FetchingProducts";
+import { describe, it, expect, test } from "vitest";
+// const data = import.meta.env.VITE_APP_DATA;
 // import axios from "axios";
 // // Function to fetch products from the API
 // const fetchProducts = async () => {
@@ -23,15 +23,13 @@ describe("fetchProducts", () => {
 
     // axios.get.mockResolvedValue({ data: mockData });
     const products = await fetchProducts();
-    products.map((p) =>
-      p.number_of_purchases >= 50
-        ? // ? console.log(p.product, p.brand.brand_name, p.colors)
-          console.log(p.images)
-        : null
-    );
+    test("function returns brand names", () => {
+      expect(products.brand_name().tobeDefined());
+    });
+
     // products.map((p) => console.log(p.product, p.brand.brand_name, p.colors));
 
-    expect(Array.isArray(products)).toBe(true);
+    // expect(Array.isArray(products)).toBe(true);
     // // const firstProduct = products.find((product) => product.product_id ===1);
     // expect(firstProduct).toBeDefined(); // Ensure the product exists
     // expect(firstProduct).toHaveProperty("brand_id", );

@@ -9,7 +9,7 @@ class BrandSerializer(serializers.ModelSerializer):
         return obj.get_brand_name_display()
 
 class ProductSerializer(serializers.ModelSerializer):
-    brand = BrandSerializer()
+    brand = BrandSerializer(required=False)
     product = serializers.SerializerMethodField() 
     class Meta:
         model = Product
