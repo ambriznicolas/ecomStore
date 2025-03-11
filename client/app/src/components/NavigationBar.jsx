@@ -1,7 +1,3 @@
-// import { Offcanvas } from "react-bootstrap/Offcanvas";
-// import { Nav } from "react-bootstrap/Nav";
-// import { Navbar } from "react-bootstrap/Navbar";
-// import { Container } from "react-bootstrap/Container";
 import { Button, Nav, Navbar, Offcanvas, Container } from "react-bootstrap";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -10,13 +6,13 @@ export function NavigationBar() {
   const [showCart, setShowCart] = useState(false);
   return (
     <>
-      <Navbar key="md" expand="lg" className="bg-body-tertiary">
+      <Navbar key="md" expand="lg" className="bg-body-tertiary" sticky="top">
         <Container fluid>
           <Navbar.Brand href="/" className="mx-auto">
             {" "}
             <img
               alt=""
-              src="/public/Fight-Club.png"
+              src="/Fight-Club.png"
               width="150"
               height="30"
               className="align-top d-inline-block"
@@ -40,28 +36,22 @@ export function NavigationBar() {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
-                <Nav.Link>
-                  <Link className="Nav-Link" to="/products/Yokkao">
-                    Yokkao
-                  </Link>
-                </Nav.Link>
-                <Nav.Link>
+                <Nav.Link className="Nav-Link" to="/products/Yokkao" as={Link}>
                   {" "}
-                  <Link className="Nav-Link" to="/products/Fairtex">
-                    Fairtex
-                  </Link>
+                  Yokkao
                 </Nav.Link>
-                <Nav.Link>
-                  {" "}
-                  <Link className="Nav-Link" to="/products/Twins">
-                    Twins
-                  </Link>
+                <Nav.Link className="Nav-Link" to="/products/Fairtex" as={Link}>
+                  Fairtex
                 </Nav.Link>
-                <Nav.Link>
-                  {" "}
-                  <Link className="Nav-Link" to="/products/Cleto-Reyes">
-                    Cleto Reyes
-                  </Link>
+                <Nav.Link className="Nav-Link" to="/products/Twins" as={Link}>
+                  Twins
+                </Nav.Link>
+                <Nav.Link
+                  className="Nav-Link"
+                  to="/products/Cleto-Reyes"
+                  as={Link}
+                >
+                  Cleto Reyes
                 </Nav.Link>
                 {/* <NavDropdown
                   title="Dropdown"

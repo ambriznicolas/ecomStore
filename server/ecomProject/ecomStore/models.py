@@ -13,7 +13,14 @@ class Brand(models.Model):
 
     def __str__ (self):
         return self.get_brand_name_display()
-
+# Define a function that generates the upload path based on the brand
+def product_upload_to(instance, filename):
+    # You can use the `instance` parameter to access model fields like `brand`
+    brand_folder = instance.brand  # This will create folder names like 'cleto-reyes', 'fairtex'
+    
+    # Ensure the brand is in a suitable format (e.g., lowercase, spaces replaced with hyphens, etc.)
+    # The filename will be the original file name
+    return f'products/{brand_folder}/{filename}'  # Images saved in 'media/products/brand_name/filename'
 class Product (models.Model):
     PRODUCTS = [
         ("BG", "Boxing Gloves") 
@@ -26,8 +33,10 @@ class Product (models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
     brand= models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="products")
     number_of_purchases = models.IntegerField(default=0)
-    images= models.CharField(max_length=100)
+    images= models.ImageField(upload_to=product_upload_to)
     # quantity - models.IntegerField(max_length=1000)
+
+
 
     def __str__ (self):
         return f"{self.get_product_display()} - {self.brand.get_brand_name_display()} - {self.colors}"

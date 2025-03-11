@@ -1,6 +1,6 @@
 export const slideShow = [
-  "assets/ecom-pics/slideshow/slideshow-img-1-copy.jpg",
-  "assets/ecom-pics/slideshow/slideshow-img-2.jpg",
-  "assets/ecom-pics/slideshow/slideshow-img-3.webp",
-  "assets/ecom-pics/slideshow/slideshow-img-4-copy.jpg",
+  "/src/assets/slideshow/slideshow-img-1-copy.jpg",
+  "/src/assets/slideshow/slideshow-img-2.jpg",
+  "/src/assets/slideshow/slideshow-img-3.webp",
+  "/src/assets/slideshow/slideshow-img-4-copy.jpg",
 ];

@@ -7,7 +7,7 @@ import Image from "react-bootstrap/Image";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import { slideShow } from "./slideShow.js";
 import PropTypes from "prop-types";
-import { fetchProducts } from "./FetchingProducts";
+import { useProducts } from "./hooks/useProducts";
 import { Footer } from "./components/Footer.jsx";
 import { NavigationBar } from "./components/NavigationBar.jsx";
 import { Link } from "react-router-dom";
@@ -55,7 +55,7 @@ function About() {
                 width="290"
                 height="355"
                 className="img-top"
-                src="assets/ecom-pics/about/about-img-1.jpg"
+                src="src/assets/about/about-img-1.jpg"
                 fluid
               />
 
@@ -63,7 +63,7 @@ function About() {
                 width="290"
                 height="355"
                 className="img-bottom"
-                src="assets/ecom-pics/about/about-img-2.webp"
+                src="src/assets/about/about-img-2.webp"
                 fluid
               />
             </div>
@@ -74,23 +74,12 @@ function About() {
   );
 }
 function BestSelling() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const data = await fetchProducts(); // Call the function to fetch data
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getProducts();
-  }, []);
+  const DATA_URL = import.meta.env.VITE_API_BASE_URL;
+  // const [bestSelling, setBestSelling] = useState("");
+  const { products, loading } = useProducts();
+  const bestSelling = products
+    .filter((p) => p.number_of_purchases >= 50)
+    .slice(0, 4); // Get top 4 best-sellers
   return (
     <div>
       <h2>Trending</h2>
@@ -99,36 +88,30 @@ function BestSelling() {
         <p>Loading products...</p>
       ) : (
         <Row className="d-flex flex-column flex-sm-row flex-row overflow-auto">
-          {products.length > 0 ? (
-            products
-              .filter((product) => product.number_of_purchases >= 50) // Filter best-selling products
-              .slice(0, 4) // Show only first 4 products
-              .map((product) => (
-                <Col key={product.product_id} sm={6} lg={3} className="mb-3">
-                  <Card className="h-100">
-                    <Card.Img
-                      variant="top"
-                      src={product.images || "/placeholder.jpg"}
-                      alt={product.product}
-                    />
-                    <Card.Body>
-                      <Card.Title>
-                        {product.brand.brand_name} {product.product}{" "}
-                        {product.colors}
-                      </Card.Title>
-                      <Card.Text>${product.price}</Card.Text>
-                      <Link
-                        to={`/products/${product.brand}-${product.product}-${product.color}`}
-                      >
-                        <Button variant="dark">View Product</Button>
-                      </Link>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))
-          ) : (
-            <p>No best-selling products found.</p>
-          )}
+          {bestSelling.map((product) => (
+            <Col key={product.product_id} sm={6} lg={3} className="mb-3">
+              <Card className="h-100 border-0">
+                <Card.Img
+                  variant="top"
+                  src={`${DATA_URL}/${product.images}`}
+                  alt="Product Image"
+                />
+                <Card.Body>
+                  <Card.Title>
+                    {product.brand.brand_name} {product.product}{" "}
+                    {product.colors}
+                  </Card.Title>
+                  <Card.Text>${product.price}</Card.Text>
+                  <Link
+                    to={`/${product.brand.brand_name}/${product.product}/${product.colors}`}
+                  >
+                    <Button variant="dark">View Product</Button>
+                  </Link>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+          : (<p></p>)
         </Row>
       )}
       <div className="d-flex justify-content-center mt-3 ">
@@ -154,7 +137,7 @@ function Brands() {
             <Image
               width="170"
               height="210"
-              src="ecom-pics/brands/brand-yokkao.jpg"
+              src="/brands/brand-yokkao.jpg"
               fluid
             />
           </Link>
@@ -164,7 +147,7 @@ function Brands() {
             <Image
               width="170"
               height="210"
-              src="ecom-pics/brands/brand-twins.jpg"
+              src="/brands/brand-twins.jpg"
               fluid
             />
           </Link>
@@ -174,7 +157,7 @@ function Brands() {
             <Image
               width="170"
               height="210"
-              src="ecom-pics/brands/brand-fairtex.png"
+              src="/brands/brand-fairtex.png"
               fluid
             />
           </Link>
@@ -184,7 +167,7 @@ function Brands() {
             <Image
               width="170"
               height="210"
-              src="ecom-pics/brands/brand-cleto_retes.webp"
+              src="/brands/brand-cleto_retes.webp"
               fluid
             />
           </Link>

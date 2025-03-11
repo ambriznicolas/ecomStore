@@ -1,13 +1,14 @@
 import { Footer } from "./Footer.jsx";
 import { NavigationBar } from "./NavigationBar.jsx";
-import { fetchProducts } from "/src/FetchingProducts.js";
+
 import PropTypes from "prop-types";
 import { Card, Button, Row, Col } from "react-bootstrap";
-import { useState, useEffect } from "react";
+
 import { useParams, Link } from "react-router-dom";
+import { useProducts } from "../hooks/useProducts.js";
 function ProductsPage() {
   const { userSelection } = useParams();
-  // console.log(userSelection);
+  console.log(userSelection);
 
   return (
     <>
@@ -21,24 +22,13 @@ function ProductsPage() {
 export default ProductsPage;
 
 function Products({ userSelection }) {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const option = userSelection.replace(/[^a-zA-Z0-9\s]/g, " ");
+  const option = userSelection
+    ? userSelection.replace(/[^a-zA-Z0-9\s]/g, " ")
+    : "";
 
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const data = await fetchProducts(); // Call the function to fetch data
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const DATA_URL = import.meta.env.VITE_API_BASE_URL;
 
-    getProducts();
-  }, []);
+  const { products, loading } = useProducts();
   // if (products.length > 0) {
   //   console.log("First product brand:", products[0].brand.brand_name);
   // } else {
@@ -48,15 +38,17 @@ function Products({ userSelection }) {
     <>
       <div className="section">
         <p>
-          <a className="return-home" href="/">
+          <Link className="return-home" to="/">
             Home
-          </a>{" "}
+          </Link>{" "}
           / {option}
         </p>
       </div>
-      <div className="option">
-        <h1 style={{ fontSize: "60px" }}>{option}</h1>
-      </div>
+      {option && (
+        <div className="user">
+          <h1 style={{ fontSize: "60px" }}>{option}</h1>
+        </div>
+      )}
       <div>
         {loading ? (
           <p>Loading products...</p>
@@ -67,10 +59,10 @@ function Products({ userSelection }) {
                 .filter((product) => product.brand?.brand_name === option)
                 .map((product) => (
                   <Col key={product.product_id} sm={6} lg={3} className="mb-3">
-                    <Card className="h-100">
+                    <Card className="h-100 border-0">
                       <Card.Img
                         variant="top"
-                        src={product.images || "/placeholder.jpg"}
+                        src={`${DATA_URL}/${product.images} `}
                         alt={product.product}
                       />
                       <Card.Body>
@@ -80,7 +72,7 @@ function Products({ userSelection }) {
                         </Card.Title>
                         <Card.Text>${product.price}</Card.Text>
                         <Link
-                          to={`/products/${product.brand?.brand_name}-${product.product}-${product.color}`}
+                          to={`/${product.brand?.brand_name}/${product.product}/${product.colors}`}
                         >
                           <Button variant="dark">View Product</Button>
                         </Link>

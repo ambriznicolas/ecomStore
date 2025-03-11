@@ -9,10 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products/:userSelection" element={<ProductsPage />} />
-        <Route
-          path="/products/:brand-:product-:color"
-          element={<ViewProduct />}
-        />
+        <Route path="/:brand/:product/:color" element={<ViewProduct />} />
       </Routes>
     </>
   );

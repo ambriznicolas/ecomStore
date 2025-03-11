@@ -11,8 +11,15 @@ class BrandSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     brand = BrandSerializer(required=False)
     product = serializers.SerializerMethodField() 
+    # images_url = serializers.SerializerMethodField()  
     class Meta:
         model = Product
         fields = '__all__'  # Or specify fields like ['id', 'name', 'price']
     def get_product(self,obj):
         return obj.get_product_display()
+    
+    # def get_images_url(self, obj):
+    #     request = self.context.get('request')  # Get request context for full URL
+    #     if obj.images:
+    #         return request.build_absolute_uri(obj.images.url)  # Returns full URL
+    #     return None
