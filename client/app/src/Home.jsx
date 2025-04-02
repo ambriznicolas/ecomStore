@@ -13,16 +13,20 @@ import { NavigationBar } from "./components/NavigationBar.jsx";
 import { Link } from "react-router-dom";
 
 import { useState, useEffect } from "react";
-
+import { useSelector } from "react-redux";
+import { selectDataUrl } from "./Product-Images.jsx";
 import "./App.css";
 
 function App() {
+  // state) => state.cart.cart
+  const DATA_URL = useSelector(selectDataUrl);
+
   return (
     <>
-      <NavigationBar />
+      <NavigationBar data_url={DATA_URL} />
       <SlideShow images={slideShow} interval={3000} />
       <Brands />
-      <BestSelling />
+      <BestSelling data_url={DATA_URL} />
       <About />
       <Footer />
     </>
@@ -73,8 +77,7 @@ function About() {
     </>
   );
 }
-function BestSelling() {
-  const DATA_URL = import.meta.env.VITE_API_BASE_URL;
+function BestSelling({ data_url }) {
   // const [bestSelling, setBestSelling] = useState("");
   const { products, loading } = useProducts();
   const bestSelling = products
@@ -93,7 +96,7 @@ function BestSelling() {
               <Card className="h-100 border-0">
                 <Card.Img
                   variant="top"
-                  src={`${DATA_URL}/${product.images}`}
+                  src={`${data_url}/${product.images}`}
                   alt="Product Image"
                 />
                 <Card.Body>
@@ -253,6 +256,9 @@ function SlideShow({ images, interval }) {
 SlideShow.propTypes = {
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
   interval: PropTypes.number,
+};
+BestSelling.propTypes = {
+  data_url: PropTypes.string,
 };
 
 // Navbar

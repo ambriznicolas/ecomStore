@@ -35,3 +35,20 @@ export function useProduct(slug) {
 
   return { product, loading };
 }
+// export function GetImage(product) {
+//   const [selectedP, setSelectedP] = useState(null);
+//   useEffect(() => {
+//     if (selectedP) return; // ✅ Prevent fetching with' empty slug
+
+//     // setLoading(true);
+//     fetchProducts().then((data) => {
+//       const selected = data.find(
+//         (p) => `${p.brand?.brand_name} ${p.product} ${p.colors}` === product
+//       );
+//       setSelectedP(selected || null); // ✅ Avoid setting undefined
+//       // setLoading(false);
+//     });
+//   }, [product]);
+
+//   return { selectedP };
+// }

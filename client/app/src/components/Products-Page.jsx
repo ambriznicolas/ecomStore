@@ -5,14 +5,19 @@ import PropTypes from "prop-types";
 import { Card, Button, Row, Col } from "react-bootstrap";
 
 import { useParams, Link } from "react-router-dom";
-import { useProducts } from "../hooks/useProducts.js";
+import { useProducts } from "../hooks/useProducts.jsx";
+import { useSelector } from "react-redux";
+import { selectDataUrl } from "../Product-Images.jsx";
+
 function ProductsPage() {
+  const DATA_URL = useSelector(selectDataUrl);
+
   const { userSelection } = useParams();
   console.log(userSelection);
 
   return (
     <>
-      <NavigationBar />
+      <NavigationBar data_url={DATA_URL} />
       <Products userSelection={userSelection} />
       <Footer />
     </>
