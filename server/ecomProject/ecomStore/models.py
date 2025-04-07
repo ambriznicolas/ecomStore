@@ -1,4 +1,6 @@
 from django.db import models
+import uuid
+from django.utils import timezone
 
 # Create your models here.
 class Brand(models.Model):
@@ -85,9 +87,15 @@ class Customer (models.Model):
     state = models.CharField(max_length=20)
     phone = models.CharField(max_length=20, unique=True, validators=[format_phone_number])
 
+
+    
 class Cart(models.Model):
-    cart_id =  models.IntegerField(primary_key=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE) 
+    id = models.AutoField(primary_key=True)  # default primary key
+    cart_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    # objects= CartManager()
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")  # Links to Cart
@@ -96,6 +104,7 @@ class CartItem(models.Model):
 
     # def total_price():
     #     total_price = sum(item.product.price * item.quantity for item in cart..all())
+
 
 
 

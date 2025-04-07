@@ -46,9 +46,6 @@ const cartSlice = createSlice({
       if (!state.cart) state.cart = [];
 
       const { cartItem, quantity, price, image } = action.payload;
-      console.log(cartItem);
-      console.log(price);
-      console.log(image);
 
       const existingItem = state.cart.find(
         (item) => item.cartItem === cartItem
@@ -56,8 +53,6 @@ const cartSlice = createSlice({
 
       if (existingItem) {
         existingItem.quantity += Number(quantity);
-
-        console.log(state.netPrice);
       } else {
         // state.cart.push({ cartArray.cartItem, cartArray.quantity });
         state.cart.push({
@@ -67,8 +62,6 @@ const cartSlice = createSlice({
           image,
         });
         // console.log(existingItem.price);
-
-        console.log(state.netPrice);
       }
       // state.netPrice = Number((price * quantity).toFixed(2));
       state.netPrice = Number(
@@ -81,7 +74,6 @@ const cartSlice = createSlice({
         state.cart.reduce((acc, item) => acc + item.quantity, 0)
       );
       // state.totalItems += Number(quantity);
-      console.log(state.totalItems);
 
       localStorage.setItem("cart", JSON.stringify(state.cart));
       localStorage.setItem("totalItems", JSON.stringify(state.totalItems));
@@ -127,7 +119,6 @@ const cartSlice = createSlice({
           .reduce((acc, item) => acc + item.price * item.quantity, 0)
           .toFixed(2)
       );
-      console.log(state.netPrice);
 
       state.totalItems = Number(state.totalItems + 1);
       // state.netPrice += existingItem.price;

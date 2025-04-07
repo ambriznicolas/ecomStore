@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Brand  # Replace with your model
+from .models import Product, Brand, CartItem  # Replace with your model
 class BrandSerializer(serializers.ModelSerializer):
     brand_name = serializers.SerializerMethodField()  
     class Meta:
@@ -23,3 +23,7 @@ class ProductSerializer(serializers.ModelSerializer):
     #     if obj.images:
     #         return request.build_absolute_uri(obj.images.url)  # Returns full URL
     #     return None
+class CartItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CartItem 
+        fields = '__all__'

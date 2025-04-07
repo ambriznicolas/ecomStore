@@ -73,7 +73,10 @@ function CartItems({ data_url }) {
                       rounded
                     />
                   </Col>
-                  <Col className="section-cart-product d-flex align-items-center">
+                  <Col
+                    className="section-cart-product d-flex align-items-center"
+                    xs={6}
+                  >
                     <p
                       className="content-center"
                       style={{ textAlign: "center" }}
@@ -135,9 +138,11 @@ function CartItems({ data_url }) {
               <p>Shipping, taxes and discount codes calculated at checkout</p>
             </div>
             <div>
-              <Button variant="dark" size="lg">
-                Checkout
-              </Button>
+              <Link to="/checkout">
+                <Button variant="dark" size="lg">
+                  Checkout
+                </Button>
+              </Link>
             </div>
           </Col>
         </Row>

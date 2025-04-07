@@ -88,7 +88,7 @@ function BestSelling({ data_url }) {
       <h2>Trending</h2>
       <h1>BEST SELLERS</h1>
       {loading ? (
-        <p>Loading products...</p>
+        <p className="mx-auto">Loading products...</p>
       ) : (
         <Row className="d-flex flex-column flex-sm-row flex-row overflow-auto">
           {bestSelling.map((product) => (

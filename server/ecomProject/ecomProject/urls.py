@@ -16,13 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from ecomStore.views import product_list
+from ecomStore.views import product_list, AddToCartView, GuestCartDetailView
 from django.conf import settings
 from django.conf.urls.static import static
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/products/', product_list, name='product-list'),
+    path("api/cart/add/", AddToCartView.as_view(), name="add-to-cart"),
+    path("api/cart/", GuestCartDetailView.as_view(), name="get-cart"),
+ 
 
 ]
 
