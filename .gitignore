@@ -25,6 +25,7 @@ dist-ssr
 
 #ignore 
 server/ecomProject/.env
+server/ecomProject/media
 client/app/.env
 
 # Ignore Python bytecode files
